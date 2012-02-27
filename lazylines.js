@@ -2,6 +2,8 @@ var util = require('util');
 var events = require('events');
 var fs = require("fs");
 
+//---------------- LineReadStream
+
 /**
  * The lines returned by this stream include line terminators (either "\n" or "\r\n").
  *
@@ -50,6 +52,21 @@ LineReadStream.fromFile = function (fileName) {
     return new LineReadStream(fs.createReadStream(fileName, { encoding: "utf8", bufferSize: 1024 }));
 }
 
+//---------------- Various utilities
+
+function streamToString(stream, callback) {
+    var str = "";
+    stream.on('data', function (data) {
+        str += data;
+    });
+
+    stream.on('end', function () {
+        callback(str);
+    });
+}
+
+//---------------- EOL handling tools
+
 var RE_LINE = /^(.*)\r?\n$/;
 /**
  * If line ends with a line break (either "\n" or "\r\n"), remove it.
@@ -64,5 +81,25 @@ function chomp(line) {
     }
 }
 
-exports.chomp = chomp;
+function getPlatformEOL() {
+    return process.platform === "win32" ? "\r\n" : "\n";
+}
+
+function extractEOL(str) {
+    if (str.indexOf("\r\n") >= 0) {
+        return "\r\n";
+    } else if (str.indexOf("\n") >= 0) {
+        return "\n";
+    } else {
+        // There is no EOL in the string
+        return getPlatformEOL();
+    }
+}
+
+//---------------- Exports
+
 exports.LineReadStream = LineReadStream;
+exports.chomp = chomp;
+exports.getPlatformEOL = getPlatformEOL;
+exports.extractEOL = extractEOL;
+exports.streamToString = streamToString;

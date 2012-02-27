@@ -1,0 +1,12 @@
+{
+  "name": "lazylines",
+  "version": "1.0.0",
+  "author": "Axel Rauschmayer <axe@rauschma.de>",
+  "description": "Read a text stream, line by line",
+  "main": "./lazylines.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rauschma/lazylines"
+  },
+  "license": "MIT"
+}
