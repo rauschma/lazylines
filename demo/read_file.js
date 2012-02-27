@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var ll = require("../lazylines.js");
+var ll = require("lazylines.js");
 var fs = require("fs");
 
 var fileName = process.argv[2];

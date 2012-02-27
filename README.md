@@ -5,7 +5,7 @@ This module allows you to read a text stream, one line at a time, lazily.
 
 Example:
 
-    var ll = require("../lazylines.js");
+    var ll = require("lazylines.js");
 
     process.stdin.resume();
     var inp = new ll.LineReadStream(process.stdin);
