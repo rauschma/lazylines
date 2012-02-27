@@ -5,8 +5,8 @@ var expect = require('expect.js');
 
 var ll = require("../lazylines");
 
-describe('lazylines', function(){
-    it("", function (done) {
+describe('LineReadStream', function(){
+    it("should split lines properly", function (done) {
         var reader = new StringReadStream();
         var inp = new ll.LineReadStream(reader);
 
@@ -23,7 +23,17 @@ describe('lazylines', function(){
         );
     });
 });
+describe('chomp', function(){
+    it("should work with any EOL", function () {
+        expect(ll.chomp("line\n")).to.be("line");
+        expect(ll.chomp("line\r\n")).to.be("line");
+    });
+    it("should work with no EOL", function () {
+        expect(ll.chomp("line")).to.be("line");
+    });
+});
 
+//----------------- Helpers
 
 function StringReadStream() {
 }
